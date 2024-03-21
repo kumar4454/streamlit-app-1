@@ -25,8 +25,8 @@ st.markdown("""
             </style""", unsafe_allow_html=True)
 
 
-api=st.secrets["genai_api_key"]
-
+#api=st.secrets["genai_api_key"]
+api="AIzaSyDokwegR04F-D94Olo8l8QcgVpd6MCJ0QU"
 genai.configure(api_key= api)
 model= genai.GenerativeModel("gemini-pro")
 
