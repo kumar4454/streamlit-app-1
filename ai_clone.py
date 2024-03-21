@@ -1,10 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
 from streamlit_option_menu import option_menu
-#api=st.secrets["genai_api_key"]
-api="AIzaSyDokwegR04F-D94Olo8l8QcgVpd6MCJ0QU"
-genai.configure(api_key= api)
-model= genai.GenerativeModel("gemini-pro")
 
 hide_st_style="""
             <style>
@@ -20,13 +16,22 @@ st.markdown("""
                 visibility: hidden;
                 }
             </style""", unsafe_allow_html=True)
+            
 st.markdown("""
             <style>
             .styles_terminalButton__JBj5T {
                 visibility: hidden;
                 }
             </style""", unsafe_allow_html=True)
+
+
+api=st.secrets["genai_api_key"]
+
+genai.configure(api_key= api)
+model= genai.GenerativeModel("gemini-pro")
+
 #title
+
 st.markdown("<h1 style='text-align:center'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
 
 if "messages" not in st.session_state:
@@ -47,14 +52,14 @@ for message in st.session_state.messages:
 #prompt
 prompt = st.chat_input("enter your prompt")
 
-if prompt is None:
-    with st.chat_message("assistant"):
-        st.markdown("hello, how can i help you")
+#if prompt is None:
+#    with st.chat_message("assistant"):
+#        st.markdown("hello, how can i help you")
 #else:
 #    print("Error: Input data 'p' is None.")
 
 
-if prompt is not None:
+if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
     #response= model.generate_content([prompt])
@@ -63,9 +68,10 @@ if prompt is not None:
  #   default_prompt = "hello"
  #   response = model.generate_content([default_prompt])
 
-response= model.generate_content([prompt])
+r= model.generate_content([prompt])
+response= r.text
 
 if response:
     with st.chat_message("assistant"):
-        st.markdown(response.text)
-    st.session_state.messages.append({"role":"assistant", "content":response.text})
+        st.markdown(response)
+    st.session_state.messages.append({"role":"assistant", "content":response})
