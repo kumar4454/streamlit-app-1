@@ -20,6 +20,12 @@ st.markdown("""
                 visibility: hidden;
                 }
             </style""", unsafe_allow_html=True)
+st.markdown("""
+            <style>
+            .styles_terminalButton__JBj5T {
+                visibility: hidden;
+                }
+            </style""", unsafe_allow_html=True)
 #title
 st.markdown("<h1 style='text-align:center'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
 
