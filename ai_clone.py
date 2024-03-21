@@ -6,8 +6,21 @@ api="AIzaSyDokwegR04F-D94Olo8l8QcgVpd6MCJ0QU"
 genai.configure(api_key= api)
 model= genai.GenerativeModel("gemini-pro")
 
+hide_st_style="""
+            <style>
+            #MainMenu{visibility: hidden;}
+            footer{visibility: hidden;}
+            header{visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+st.markdown("""
+            <style>
+            .viewerBadge_link__qRIco {
+                visibility: hidden;
+                }
+            </style""", unsafe_allow_html=True)
 #title
-
 st.markdown("<h1 style='text-align:center'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
 
 if "messages" not in st.session_state:
