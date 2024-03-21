@@ -10,6 +10,12 @@ hide_st_style="""
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+st.markdown("""
+            <style>
+            .viewerBadge_link__qRIco {
+                visibility: hidden;
+                }
+            </style""", unsafe_allow_html=True)
 
 api=st.secrets["genai_api_key"]
 
