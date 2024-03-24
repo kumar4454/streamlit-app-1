@@ -31,12 +31,19 @@ genai.configure(api_key= api)
 model= genai.GenerativeModel("gemini-pro")
 
 
-#title
 
+#title
 st.markdown("<h1 style='text-align:center'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
+
+b=st.sidebar.button("New Chat")
+
+if b:
+    for key in st.session_state.keys():
+        del st.session_state[key]
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
 
 selected=option_menu(
     menu_title=None,
@@ -45,36 +52,38 @@ selected=option_menu(
     icons=["house","gear wheel","book"],
     orientation="horizontal",
 )
+if selected == "home":
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    #prompt
+    prompt = st.chat_input("enter your prompt")
 
-#prompt
-prompt = st.chat_input("enter your prompt")
-
-if prompt is None:
-    with st.chat_message("assistant"):
-        st.markdown("hello, how can i help you")
-#else:
-#    print("Error: Input data 'p' is None.")
-
-else:
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    #response= model.generate_content([prompt])
-    st.session_state.messages.append({"role":"user", "content":prompt})
-#else:
- #   default_prompt = "hello"
- #   response = model.generate_content([default_prompt])
-
-    r= model.generate_content([prompt])
-    response= r.text
-
-    if response:
+    if prompt is None:
         with st.chat_message("assistant"):
-            st.markdown(response)
-        st.session_state.messages.append({"role":"assistant", "content":response})
+            st.markdown("Hello! , How can I assist you.")
+
     else:
-        with st.chat_message("assistant"):
-            st.markdown("sorry! unable to geerate response")
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        #storing prompt history
+        st.session_state.messages.append({"role":"user", "content":prompt})
+        #generating response
+        r= model.generate_content([prompt])
+        response= r.text
+        #if response is created
+        if response:
+            with st.chat_message("assistant"):
+                st.markdown(response)
+            #storing response history
+            st.session_state.messages.append({"role":"assistant", "content":response})
+        else:
+            with st.chat_message("assistant"):
+                st.markdown("sorry! unable to geerate response")
+
+elif selected == "about us":
+    st.info("about us page")
+
+elif selected == "settings":
+    st.info("settings page")
