@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 from streamlit_option_menu import option_menu
-import speech_recognition as sr
+#import speech_recognition as sr
 
 tite="Ai-clone-1"
 icon=":smiley:"
@@ -35,23 +35,6 @@ api=st.secrets["genai_api_key"]
 genai.configure(api_key= api)
 model= genai.GenerativeModel("gemini-pro")
 
-def transcribe_speech():
-    recognizer = sr.Recognizer()
-    
-    with sr.Microphone() as source:
-        st.write("Listening...")
-        recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
-        audio = recognizer.listen(source)  # Listen to the audio input
-    
-    try:
-        st.write("Transcribing...")
-        text = recognizer.recognize_google(audio)
-        st.write("You said:", text)
-        return text
-    except sr.UnknownValueError:
-        st.write("Sorry, could not understand audio.")
-    except sr.RequestError as e:
-        st.write(f"Could not request results; {e}")
 
 #title
 
@@ -93,8 +76,8 @@ if selected == "Home":
 
     info= st.empty()
     info.info("how can i help you today....")
-    if b2:
-        prompt=transcribe_speech()
+    #if b2:
+        #prompt=transcribe_speech()
     #prompt
     else:
         prompt = st.chat_input("Enter a prompt here")
