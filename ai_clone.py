@@ -1,6 +1,11 @@
 import streamlit as st
 import google.generativeai as genai
 from streamlit_option_menu import option_menu
+import speech_recognition as sr
+
+tite="Ai-clone-1"
+icon=":smiley:"
+#st.beta_set_page_config(page_title="My Streamlit App", page_icon=":smiley:", layout="wide", initial_sidebar_state="auto")
 
 hide_st_style="""
             <style>
@@ -30,41 +35,76 @@ api=st.secrets["genai_api_key"]
 genai.configure(api_key= api)
 model= genai.GenerativeModel("gemini-pro")
 
-
+def transcribe_speech():
+    recognizer = sr.Recognizer()
+    
+    with sr.Microphone() as source:
+        st.write("Listening...")
+        recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
+        audio = recognizer.listen(source)  # Listen to the audio input
+    
+    try:
+        st.write("Transcribing...")
+        text = recognizer.recognize_google(audio)
+        st.write("You said:", text)
+        return text
+    except sr.UnknownValueError:
+        st.write("Sorry, could not understand audio.")
+    except sr.RequestError as e:
+        st.write(f"Could not request results; {e}")
 
 #title
-st.markdown("<h1 style='text-align:center'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
 
-b=st.sidebar.button("New Chat")
+#title_html = """
+#    <div style="position: fixed; top: 10px; padding: 5px 10px; border-radius: 5px;">
+#        <h1>Gemini Ai Clone. </h1>
+#   </div>
+#"""
+#st.markdown(title_html, unsafe_allow_html= True)
 
-if b:
-    for key in st.session_state.keys():
-        del st.session_state[key]
-
+#st.title('My Streamlit App')
+st.markdown("<h1 style='text-align:center;'>Gemini Ai Clone.</h1>", unsafe_allow_html=True) 
+# sidebar...
+with st.sidebar:
+    b=st.sidebar.button(" :heavy_plus_sign: New Chat", help="new chat button")
+    b2= st.button("speak")
+    if b:
+        for key in st.session_state.keys():
+            del st.session_state[key]
+    #if b2:
+    #    transcribe_speech()
+    #options
+    selected=option_menu(
+        menu_title=None,
+        menu_icon=None,
+        options=["Home","Settings","About Us"],
+        icons=["house","gear wheel","book"],
+        #orientation="horizontal",
+    )
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
-selected=option_menu(
-    menu_title=None,
-    menu_icon=None,
-    options=["home","settings","about us"],
-    icons=["house","gear wheel","book"],
-    orientation="horizontal",
-)
-if selected == "home":
+#navigation...
+if selected == "Home":
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+    info= st.empty()
+    info.info("how can i help you today....")
+    if b2:
+        prompt=transcribe_speech()
     #prompt
-    prompt = st.chat_input("enter your prompt")
+    else:
+        prompt = st.chat_input("Enter a prompt here")
 
     if prompt is None:
         with st.chat_message("assistant"):
-            st.markdown("Hello! , How can I assist you.")
+            st.markdown("How can I help you today?")
 
     else:
+        info.empty()
         with st.chat_message("user"):
             st.markdown(prompt)
         #storing prompt history
@@ -82,8 +122,8 @@ if selected == "home":
             with st.chat_message("assistant"):
                 st.markdown("sorry! unable to geerate response")
 
-elif selected == "about us":
-    st.info("about us page")
-
-elif selected == "settings":
+elif selected == "Settings":
     st.info("settings page")
+
+elif selected == "About Us":
+    st.info("about us page")
