@@ -79,8 +79,8 @@ if selected == "Home":
     #if b2:
         #prompt=transcribe_speech()
     #prompt
-    else:
-        prompt = st.chat_input("Enter a prompt here")
+    
+    prompt = st.chat_input("Enter a prompt here")
 
     if prompt is None:
         with st.chat_message("assistant"):
