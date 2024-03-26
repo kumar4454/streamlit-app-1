@@ -3,8 +3,8 @@ import google.generativeai as genai
 from streamlit_option_menu import option_menu
 #import speech_recognition as sr
 
-tite="Ai-clone-1"
-icon=":smiley:"
+#tite="Ai-clone-1"
+#icon=":smiley:"
 #st.beta_set_page_config(page_title="My Streamlit App", page_icon=":smiley:", layout="wide", initial_sidebar_state="auto")
 
 hide_st_style="""
