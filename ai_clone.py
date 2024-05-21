@@ -20,14 +20,14 @@ st.markdown("""
             .viewerBadge_link__qRIco {
                 visibility: hidden;
                 }
-            </style""", unsafe_allow_html=True)
+            </style>""", unsafe_allow_html=True)
             
 st.markdown("""
             <style>
             .styles_terminalButton__JBj5T {
                 visibility: hidden;
                 }
-            </style""", unsafe_allow_html=True)
+            </style>""", unsafe_allow_html=True)
 
 
 api=st.secrets["genai_api_key"]
