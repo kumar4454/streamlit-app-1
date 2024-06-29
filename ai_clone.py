@@ -27,6 +27,7 @@ st.markdown("""
             <style>
             .styles_terminalButton__JBj5T {
                 visibility: hidden;
+                display: none;
                 }
             </style>""", unsafe_allow_html=True)
 
