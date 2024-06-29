@@ -19,6 +19,7 @@ st.markdown("""
             <style>
             .viewerBadge_link__qRIco {
                 visibility: hidden;
+                display: none;
                 }
             </style>""", unsafe_allow_html=True)
             
