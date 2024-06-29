@@ -21,6 +21,10 @@ st.markdown("""
                 visibility: hidden;
                 display: none;
                 }
+            .viewerBadge_container__r5tak styles_viewerBadge__CvC9N{
+            visidility: none;
+            display: none;
+            }
             </style>""", unsafe_allow_html=True)
             
 st.markdown("""
